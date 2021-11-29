@@ -18,10 +18,11 @@ function createUser(users) {
 }
 
 function getUser(username) {
-  return db.query(`SELECT * FROM users`).then((user) => {
-    const results = user.rows;
-    return results.find((element) => element == username);
-  });
+  return db
+    .query(`SELECT * FROM users WHERE username=$1 `, [username])
+    .then((user) => {
+      return user.rows;
+    });
 }
 
 module.exports = {

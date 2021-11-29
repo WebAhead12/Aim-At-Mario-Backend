@@ -1,9 +1,10 @@
 BEGIN;
 DROP TABLE IF EXISTS users,  stats;
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  username VARCHAR(36) NOT NULL,
+  password VARCHAR(24) NOT NULL
 );
 
 CREATE TABLE stats (

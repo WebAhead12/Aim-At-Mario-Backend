@@ -10,6 +10,7 @@ function register(req, res, next) {
   model
     .getUser(username)
     .then((find) => {
+      console.log(find);
       if (!find) {
         model
           .createUser(req.body)
