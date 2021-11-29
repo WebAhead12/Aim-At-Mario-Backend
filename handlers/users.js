@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const model = require("../model/users");
-const { response } = require("express");
-
 dotenv.config();
+const SECRET = process.env.JWT_SECRET;
 
 function register(req, res, next) {
   console.log(req.body);
@@ -13,13 +12,13 @@ function register(req, res, next) {
     .then((find) => {
       if (!find) {
         model
-          .createUser(data)
-          .then((user) => {
-            const token = jwt.sign({ username: user.username }, SECRET, {
+          .createUser(req.body)
+          .then(() => {
+            const token = jwt.sign({ username: username }, SECRET, {
               expiresIn: "1h",
             });
             const response = {
-              username: user.username,
+              username: username,
               access_token: token,
             };
             res.status(201).send(response);

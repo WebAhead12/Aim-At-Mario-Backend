@@ -1,9 +1,10 @@
 const db = require("../database/connection");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const model = require("../model/users");
+const bcrypt = require("bcryptjs");
 
 function createUser(users) {
+  console.log(users);
   return bcrypt
     .genSalt(10)
     .then((salt) => bcrypt.hash(users.password, salt))
