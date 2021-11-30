@@ -8,8 +8,8 @@ const server = express();
 server.use(express.json());
 
 server.post("/register", users.register);
-server.get("/:user", verifyUser(), stats.get);
-server.post("/:user", verifyUser(), stats.get);
+server.get("/:user", verifyUser, stats.get);
+server.post("/:user", verifyUser, stats.get);
 server.post("/login", users.login);
 
 server.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

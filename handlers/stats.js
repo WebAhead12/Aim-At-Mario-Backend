@@ -9,7 +9,7 @@ function get(req, res, next) {
 }
 
 function post(req, res, next) {
-  const id = req.body.id; //from the header
+  const id = req.id; //from the header
   const highScore = req.body.highScore;
   model.updateStats(highScore, id).then(() => {
     res.status(200).send("updatedhighscore");
