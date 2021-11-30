@@ -36,7 +36,7 @@ function createStats(id) {
     });
 }
 
-function updateStats(highscore, userId) {
+function updateStats(obj, userId) {
   return db.query(
     `UPDATE stats SET highscore = ${highscore} WHERE user_id = ${userId}`
   );
