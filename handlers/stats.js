@@ -8,9 +8,12 @@ function get(req, res, next) {
   });
 }
 
-function post(req, res, next) {}
-
-function create(req, res, next) {
-  const username = req.body.username;
+function post(req, res, next) {
+  const id = req.body.id; //from the header
+  const highScore = req.body.highScore;
+  model.updateStats(highScore, id).then(() => {
+    res.status(200).send("updatedhighscore");
+  });
 }
+
 module.exports = { get, post };

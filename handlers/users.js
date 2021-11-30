@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const model = require("../model/users");
 const stats = require("../model/stats");
 const bcrypt = require("bcryptjs");
+const { database } = require("pg/lib/defaults");
 dotenv.config();
 const SECRET = process.env.JWT_SECRET;
 
@@ -20,12 +21,13 @@ function register(req, res, next) {
           .then((id) => {
             console.log("id", id.rows[0].id);
 
-            const token = jwt.sign({ username: username }, SECRET, {
+            const token = jwt.sign({ username: username, id: id }, SECRET, {
               expiresIn: "1h",
             });
             const response = {
               username: username,
               access_token: token,
+              id: id.rows[0].id,
             };
 
             stats.createStats(id.rows[0].id).then(() => {

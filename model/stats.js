@@ -36,7 +36,11 @@ function createStats(id) {
     });
 }
 
-function updateStats() {}
+function updateStats(highscore, userId) {
+  return db.query(
+    `UPDATE stats SET highscore = ${highscore} WHERE user_id = ${userId}`
+  );
+}
 
 module.exports = {
   getStats,
