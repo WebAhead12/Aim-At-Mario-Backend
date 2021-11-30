@@ -4,14 +4,14 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
 
 function createUser(users) {
-  console.log(users);
+  console.log("USERS CREATE", users);
   return bcrypt
     .genSalt(10)
     .then((salt) => bcrypt.hash(users.password, salt))
     .then((hash) => {
       const values = [users.username, hash];
       return db.query(
-        "INSERT INTO users(username, password) VALUES($1, $2)",
+        "INSERT INTO users(username, password) VALUES($1, $2) RETURNING id",
         values
       );
     });
