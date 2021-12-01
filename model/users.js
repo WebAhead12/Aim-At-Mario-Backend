@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
 
+//creates a new user and bcrypts its password
 function createUser(users) {
-  console.log("USERS CREATE", users);
   return bcrypt
     .genSalt(10)
     .then((salt) => bcrypt.hash(users.password, salt))
@@ -16,7 +16,7 @@ function createUser(users) {
       );
     });
 }
-
+//selects everything from user according to the username
 function getUser(username) {
   return db
     .query(`SELECT * FROM users WHERE username=$1 `, [username])

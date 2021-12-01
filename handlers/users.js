@@ -7,29 +7,27 @@ const { database } = require("pg/lib/defaults");
 dotenv.config();
 const SECRET = process.env.JWT_SECRET;
 
+/// function to register
 function register(req, res, next) {
-  console.log(req.body);
   const username = req.body.username;
+  //we search for the user in the data to check if the username is already taken
   model
     .getUser(username)
     .then((find) => {
-      console.log(find);
-
       if (find.length == 0) {
+        //if it returns an empty array then there is no user with that username
         model
-          .createUser(req.body)
+          .createUser(req.body) //function to create a user using the username and passowrd
           .then((id) => {
-            console.log("id", id.rows[0].id);
-
-            const token = jwt.sign({ username: username, id: id }, SECRET, {
-              expiresIn: "1h",
-            });
+            //we create a token with the username and id
+            const token = jwt.sign({ username: username, id: id }, SECRET);
+            // sending a response with the username access token and id
             const response = {
               username: username,
               access_token: token,
               id: id.rows[0].id,
             };
-
+            //after creating the user we create its defult stats so we can upate it
             stats.createStats(id.rows[0].id).then(() => {
               res.status(201).send(response);
             });
@@ -45,18 +43,27 @@ function register(req, res, next) {
 
 function login(req, res, next) {
   const user = req.body;
+  //we search for the user
   model.getUser(user.username).then((find) => {
-    console.log("find" + find);
+    //if the getUser function returns and empty array there is not user in our dt
     if (find.length == 0) {
       const response = "noUser";
       res.status(401).send(response);
     } else {
+      //if it finds it it compares the password in the req.body to the password in the dt
       const dbPassword = find[0].password;
-      console.log("dbpass = " + dbPassword);
       bcrypt.compare(user.password, dbPassword).then((match) => {
-        console.log(match);
         if (!match) throw new Error("Password mismatch");
-        const response = "logged in";
+        //if it is correct it creates a token
+        const token = jwt.sign(
+          { username: user.username, id: find[0].id },
+          SECRET
+        );
+        const response = {
+          username: username,
+          access_token: token,
+          id: find[0].id,
+        };
         res.status(200).send(response);
       });
     }

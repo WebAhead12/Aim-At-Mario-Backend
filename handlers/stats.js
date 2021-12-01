@@ -1,11 +1,9 @@
 const model = require("../model/stats");
 
 function get(req, res, next) {
-  //highscore
+  //gets top 10 highscores
   model.highestStats().then((data) => {
-    console.log("data", data);
-    const response = "hh in";
-    res.status(200).send(response);
+    res.status(200).send(data);
   });
 }
 
@@ -19,9 +17,9 @@ function post(req, res, next) {
 }
 
 function userStats(req, res, next) {
+  //stats of specified user
   const username = req.body.username;
   model.getStats(username).then((stats) => {
-    console.log("stats", stats);
     res.status(200).send(stats[0]);
   });
 }

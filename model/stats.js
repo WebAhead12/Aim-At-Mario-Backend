@@ -4,10 +4,10 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
 const userModel = require("./users");
 
+//gets stats from username
 function getStats(username) {
   return userModel.getUser(username).then((user) => {
     const id = user[0].id;
-    console.log("id", id);
     return db
       .query(`SELECT * FROM stats WHERE user_id=$1 `, [id])
       .then((user) => {
@@ -16,7 +16,7 @@ function getStats(username) {
       });
   });
 }
-
+//top 10 highest stats
 function highestStats() {
   return db
     .query(
@@ -26,7 +26,7 @@ function highestStats() {
       return data.rows;
     });
 }
-
+//function that creates defult stats
 function createStats(id) {
   const values = [0, 0, 0, id];
   return db
@@ -38,7 +38,7 @@ function createStats(id) {
       return stats.rows;
     });
 }
-
+//updates users stats
 function updateStats(obj, userId) {
   const { hits, misses, highScore } = obj;
   return db.query(
