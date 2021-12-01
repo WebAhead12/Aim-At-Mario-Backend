@@ -9,7 +9,7 @@ const server = express();
 server.use(express.json());
 
 server.post("/register", users.register);
-server.get("/:user", verifyUser, stats.get);
+server.get("/:user/scoreboard", verifyUser, stats.get);
 server.get("/:user/stats", verifyUser, stats.userStats);
 server.post("/:user/stats", verifyUser, stats.post);
 server.post("/login", users.login);
