@@ -44,30 +44,33 @@ function register(req, res, next) {
 function login(req, res, next) {
   const user = req.body;
   //we search for the user
-  model.getUser(user.username).then((find) => {
-    //if the getUser function returns and empty array there is not user in our dt
-    if (find.length == 0) {
-      const response = "noUser";
-      res.status(401).send(response);
-    } else {
-      //if it finds it it compares the password in the req.body to the password in the dt
-      const dbPassword = find[0].password;
-      bcrypt.compare(user.password, dbPassword).then((match) => {
-        if (!match) throw new Error("Password mismatch");
-        //if it is correct it creates a token
-        const token = jwt.sign(
-          { username: user.username, id: find[0].id },
-          SECRET
-        );
-        const response = {
-          username: username,
-          access_token: token,
-          id: find[0].id,
-        };
-        res.status(200).send(response);
-      });
-    }
-  });
+  model
+    .getUser(user.username)
+    .then((find) => {
+      //if the getUser function returns and empty array there is not user in our dt
+      if (find.length == 0) {
+        const response = "noUser";
+        res.status(401).send(response);
+      } else {
+        //if it finds it it compares the password in the req.body to the password in the dt
+        const dbPassword = find[0].password;
+        bcrypt.compare(user.password, dbPassword).then((match) => {
+          if (!match) throw new Error("Password mismatch");
+          //if it is correct it creates a token
+          const token = jwt.sign(
+            { username: user.username, id: find[0].id },
+            SECRET
+          );
+          const response = {
+            username: username,
+            access_token: token,
+            id: find[0].id,
+          };
+          res.status(200).send(response);
+        });
+      }
+    })
+    .catch(next);
 }
 
 module.exports = { login, register };
