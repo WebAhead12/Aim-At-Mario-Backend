@@ -10,19 +10,14 @@ function createUser(users) {
     .then((salt) => bcrypt.hash(users.password, salt))
     .then((hash) => {
       const values = [users.username, hash];
-      return db.query(
-        "INSERT INTO users(username, password) VALUES($1, $2) RETURNING id",
-        values
-      );
+      return db.query("INSERT INTO users(username, password) VALUES($1, $2) RETURNING id", values);
     });
 }
 //selects everything from user according to the username
 function getUser(username) {
-  return db
-    .query(`SELECT * FROM users WHERE username=$1 `, [username])
-    .then((user) => {
-      return user.rows;
-    });
+  return db.query(`SELECT * FROM users WHERE username=$1 `, [username]).then((user) => {
+    return user.rows;
+  });
 }
 
 module.exports = {
