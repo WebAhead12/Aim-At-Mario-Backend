@@ -9,7 +9,8 @@ server.use(express.json());
 
 server.post("/register", users.register);
 server.get("/:user", verifyUser, stats.get);
-server.post("/:user", verifyUser, stats.get);
+server.get("/:user/stats", verifyUser, stats.userStats);
+server.post("/:user/stats", verifyUser, stats.post);
 server.post("/login", users.login);
 
 server.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

@@ -6,11 +6,14 @@ const userModel = require("./users");
 
 function getStats(username) {
   return userModel.getUser(username).then((user) => {
-    db.query(`SELECT * FROM stats WHERE user_id=$1 `, [user.id]).then(
-      (user) => {
+    const id = user[0].id;
+    console.log("id", id);
+    return db
+      .query(`SELECT * FROM stats WHERE user_id=$1 `, [id])
+      .then((user) => {
+        console.log("rows", user.rows);
         return user.rows;
-      }
-    );
+      });
   });
 }
 
@@ -37,8 +40,9 @@ function createStats(id) {
 }
 
 function updateStats(obj, userId) {
+  const { hits, misses, highScore } = obj;
   return db.query(
-    `UPDATE stats SET highscore = ${highscore} WHERE user_id = ${userId}`
+    `UPDATE stats SET hits = ${hits},misses = ${misses},highscore = ${highScore} WHERE user_id = ${userId}`
   );
 }
 
