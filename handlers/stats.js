@@ -5,6 +5,7 @@ function get(req, res, next) {
   model
     .highestStats()
     .then((data) => {
+      console.log("data",data)
       res.status(200).send(data);
     })
     .catch(next);

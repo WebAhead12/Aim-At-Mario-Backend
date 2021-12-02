@@ -16,4 +16,4 @@ function handleErrors(error, req, res, next) {
   }
 }
 
-module.exports = handleError;
+module.exports = {handleErrors};
