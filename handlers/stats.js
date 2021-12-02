@@ -25,7 +25,7 @@ function post(req, res, next) {
 
 function userStats(req, res, next) {
   //stats of specified user
-  const username = req.body.username;
+  const username = req.username;
   model
     .getStats(username)
     .then((stats) => {

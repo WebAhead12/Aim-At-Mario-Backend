@@ -9,8 +9,13 @@
     "pg": "^8.7.1"
   },
   "scripts": {
+<<<<<<< HEAD
     "dev": "nodemon server.js ",
     "start": "node server.js -L"
+=======
+    "dev": "nodemon server.js -L --ignore **/db.json",
+    "start": "nodemon server.js -L"
+>>>>>>> ef17b027584308b168dba9d86e4b5a6a00994aa9
   },
   "name": "aim-at-mario-backend",
   "version": "1.0.0",

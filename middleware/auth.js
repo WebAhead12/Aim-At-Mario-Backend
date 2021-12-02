@@ -14,7 +14,8 @@ function verifyUser(req, res, next) {
   const token = authHeader.replace("Bearer ", "");
   try {
     const tokenData = jwt.verify(token, SECRET);
-    req.id = tokenData.user;
+    req.username = tokenData.username;
+    req.id = tokenData.id;
     next();
   } catch (_error) {
     const error = new Error("Invalid token");
