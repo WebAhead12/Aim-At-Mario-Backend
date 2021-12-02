@@ -16,8 +16,4 @@ function handleErrors(error, req, res, next) {
   }
 }
 
-<<<<<<< HEAD
 module.exports = {handleErrors};
-=======
-module.exports = { handleErrors };
->>>>>>> ef17b027584308b168dba9d86e4b5a6a00994aa9
