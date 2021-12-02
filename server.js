@@ -5,12 +5,10 @@ const stats = require("./handlers/stats");
 const cors = require("cors");
 const verifyUser = require("./middleware/auth");
 const handleError = require("./middleware/error");
-
 const PORT = process.env.PORT || 4007;
-
+server.use(cors());
 const server = express();
 server.use(express.json());
-server.use(cors());
 
 server.post("/register", users.register);
 server.get("/scoreboard", stats.get);
