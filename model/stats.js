@@ -20,7 +20,7 @@ function getStats(username) {
 function highestStats() {
   return db
     .query(
-      `SELECT highscore, user_id FROM stats ORDER BY highscore DESC LIMIT 10`
+      `SELECT stats.highscore, users.username FROM stats INNER JOIN users ON stats.user_id = users.id ORDER BY highscore DESC LIMIT 10`
     )
     .then((data) => {
       return data.rows;
@@ -39,10 +39,10 @@ function createStats(id) {
     });
 }
 //updates users stats
-function updateStats(obj, userId) {
-  const { hits, misses, highScore } = obj;
+function updateStats(highscore, userId) {
+
   return db.query(
-    `UPDATE stats SET hits = ${hits},misses = ${misses},highscore = ${highScore} WHERE user_id = ${userId}`
+    `UPDATE stats SET highscore = ${highscore} WHERE user_id = ${userId}`
   );
 }
 

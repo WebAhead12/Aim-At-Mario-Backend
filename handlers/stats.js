@@ -1,12 +1,14 @@
 const model = require("../model/stats");
+const modeluser = require("../model/users");
 
 function get(req, res, next) {
   //gets top 10 highscores
   model
     .highestStats()
     .then((data) => {
-      console.log("data",data)
+      console.log("iddata",data )
       res.status(200).send(data);
+      
     })
     .catch(next);
 }
@@ -14,11 +16,11 @@ function get(req, res, next) {
 function post(req, res, next) {
   //post new stats
   const id = req.id; //from the header
-  const obj = req.body;
+  console.log(req.body, "reqbody");
   model
-    .updateStats(obj, id)
+    .updateStats(req.body.highscore, id)
     .then(() => {
-      res.status(200).send("updatedhighscore");
+      res.status(200).send({res: "updatedhighscore"});
     })
     .catch(next);
 }

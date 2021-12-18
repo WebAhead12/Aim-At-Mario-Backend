@@ -19,8 +19,15 @@ function getUser(username) {
     return user.rows;
   });
 }
+function getUserById(id) {
+  return db.query(`SELECT username FROM users WHERE id=$1 `, [id]).then((user) => {
+    return user.rows;
+  });
+}
+
 
 module.exports = {
   createUser,
   getUser,
+  getUserById,
 };
