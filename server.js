@@ -5,10 +5,10 @@ const users = require("./handlers/users");
 const stats = require("./handlers/stats");
 const verifyUser = require("./middleware/auth");
 const handleError = require("./middleware/error");
-
 const PORT = process.env.PORT || 4007;
-const server = express();
 server.use(cors());
+const server = express();
+server.use(express.json());
 
 server.use(express.json());
 
